@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：最主要的作用就是绑定mapper.xml与对应那个Mapper接口的关系，要求接口名称为：全限定名 -->
+<mapper namespace="com.zc.ycfirstproject.Mapper.DepartmentMapper">
+    <select id="departmentAll" resultType="com.zc.ycfirstproject.VO.departmentVO" resultMap="deptUser">
+        select *
+        from department
+                 left join user u on department.id = u.dept_id
+        where department.id=#{id,jdbcType=INTEGER}
+    </select>
+    <resultMap id="deptUser" type="com.zc.ycfirstproject.VO.departmentVO">
+        <result column="id" property="id"/>
+        <result property="DeptName" column="dept_name"/>
+        <result property="Description" column="description"/>
+        <result property="address" column="address"/>
+
+        <collection property="list" column="user" ofType="com.zc.ycfirstproject.entity.User">
+            <result column="id" property="id"/>
+            <result column="user_name" property="userName"/>
+            <result column="password" property="password"/>
+            <result column="gender" property="gender"/>
+            <result column="birthday" property="birthday"/>
+            <result column="dept_id" property="deptId"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectById" resultType="com.zc.ycfirstproject.entity.Department">
+        select * from department where id=#{id}
+    </select>
+
+    <insert id="insertToDepartment" useGeneratedKeys="true" keyProperty="id">
+        insert into department(dept_name,description,address) values(#{deptName},#{description},#{address})
+    </insert>
+
+    <update id = "update">
+        update department set dept_name=#{deptName},description=#{description} where id=#{id}
+    </update>
+
+    <delete id="delete">
+        delete from department where id=#{id}
+    </delete>
+</mapper>

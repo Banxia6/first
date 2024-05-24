@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--  properties标签使用resource属性引入jdbc.properties配置文件  -->
+    <properties resource="application.properties">
+
+    </properties>
+    <settings>
+        <setting name="cacheEnabled" value="true"/>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <!-- 通过${属性名}获取具体的属性 -->
+                <property name="driver" value="${spring.datasource.driver-class-name}"/>
+                <property name="url" value="${spring.datasource.url}"/>
+                <property name="username" value="${spring.datasource.username}"/>
+                <property name="password" value="${spring.datasource.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!-- 引入映射文件 -->
+    <mappers>
+<!--        &lt;!&ndash;         <mapper resource="edu/fdzc/demo/mapper/UserMapper.xml"/>&ndash;&gt;-->
+<!--        &lt;!&ndash; 以包为单位，将包下所有的映射文件引入核心配置-->
+<!--            1. 此方式必须保证mapper接口和mapper映射文件在同相同的包下-->
+<!--            2. mapper接口要和mapper映射文件的名字保持一致-->
+<!--         &ndash;&gt;-->
+<!--        <package name="com.zc.ycfirstproject.Mapper"/>-->
+        <mapper resource="mapper/UserMapper.xml"/>
+        <mapper resource="mapper/DepartmentMapper.xml"/>
+    </mappers>
+
+</configuration>
+
